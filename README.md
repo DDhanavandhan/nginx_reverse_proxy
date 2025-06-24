@@ -1,4 +1,4 @@
-# Microservices Demo
+# reverse_proxy Nginx Demo
 
 A simple microservices setup with two backend services and an Nginx reverse proxy.
 

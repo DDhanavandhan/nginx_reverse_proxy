@@ -1,41 +1,30 @@
-version: '3.8'
+version: '3'
 
 services:
-  service1:
-    build: ./service_1
-    container_name: service1
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - backend
-   
-
-  service2:
-    build: ./service_2
-    container_name: service2
-    healthcheck:
-      test: ["CMD", "curl -f http://localhost:8080/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - backend
-
   nginx:
     build: ./nginx
-    container_name: nginx
     ports:
-      - "8080:80"
+      - "8080:8080"
     depends_on:
       - service1
       - service2
     networks:
-      - backend
+      - my_network
+
+  service1:
+    build: ./service_1
+    expose:
+      - "8001"
+    networks:
+      - my_network
+
+  service2:
+    build: ./service_2
+    expose:
+      - "8002"
+    networks:
+      - my_network
 
 networks:
-  backend:
+  my_network:
     driver: bridge
-

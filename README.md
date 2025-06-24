@@ -2,6 +2,14 @@
 
 A simple microservices setup with two backend services and an Nginx reverse proxy.
 
+## Project Structure
+
+- **service_1**: A Go service running on port 8001
+- **service_2**: A Python service running on port 8002
+- **nginx**: An Nginx reverse proxy that routes:
+  - `/service1` requests to Service 1
+  - `/service2` requests to Service 2
+
 ## Setup Instructions
 
 1. Install Docker and nginx
@@ -37,6 +45,9 @@ For each service:
    - Included test script (`testing_script.sh`)
    - Health check endpoints
    - Easy to extend for more comprehensive testing
+
+3. **Health Monitoring:** 
+   - Automated health checks ensure each service is ready to handle requests, improving overall system reliability.
 
 ## Testing
 

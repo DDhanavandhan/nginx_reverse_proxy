@@ -6,8 +6,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - service1
-      - service2
+      service1:
+        condition: service_healthy
+      service2:
+        condition: service_healthy
     networks:
       - my_network
 
@@ -15,6 +17,12 @@ services:
     build: ./service_1
     expose:
       - "8001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
       - my_network
 
@@ -22,6 +30,12 @@ services:
     build: ./service_2
     expose:
       - "8002"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
       - my_network
 
